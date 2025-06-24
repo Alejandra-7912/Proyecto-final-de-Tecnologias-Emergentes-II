@@ -1,0 +1,128 @@
+{% extends "home/base.html" %}
+
+{% block title %}Inicio | Sistema de Control Personal{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Fondo animado sutil */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at center, rgba(13,110,253,0.4), transparent 70%);
+    animation: pulse 8s ease-in-out infinite;
+    z-index: -1;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 text-center bg-gradient text-white rounded-4 shadow-lg">
+  <div class="container py-4">
+    <img src="{{ url_for('static', filename='images/logo_itb.jpg') }}" alt="Logo ITB" height="250" class="mb-4 rounded-circle border border-light border-3" />
+    <h1 class="display-4 fw-bold mb-3">Sistema de Control Personal</h1>
+    <p class="lead mb-4">Gestión integral de personal, asistencia y licencias del Instituto Técnico Brasil</p>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-light btn-lg px-4 me-2 shadow-sm">
+      <i class="bi bi-box-arrow-in-right me-2"></i>Ingresar al Sistema
+    </a>
+    <a href="#features" class="btn btn-outline-light btn-lg px-4 shadow-sm">
+      <i class="bi bi-info-circle me-2"></i>Conoce más
+    </a>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <!-- Administrador -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-1 border-primary">
+          <div class="card-header bg-primary text-white rounded-top">
+            <h4 class="my-2"><i class="bi bi-shield-lock me-2"></i>Administrador</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Gestión total de empleados</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Control de usuarios y licencias</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Reportes y estadísticas</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Historial completo</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Comunicados institucionales</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Director -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-1 border-info">
+          <div class="card-header bg-info text-white rounded-top">
+            <h4 class="my-2"><i class="bi bi-person-gear me-2"></i>Director Académico</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-info me-2"></i>Consulta de personal</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-info me-2"></i>Asignación de materias</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-info me-2"></i>Consulta de historial</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-info me-2"></i>Visualización de licencias</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-info me-2"></i>Comunicados a docentes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personal -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-1 border-warning">
+          <div class="card-header bg-warning text-dark rounded-top">
+            <h4 class="my-2"><i class="bi bi-person-badge me-2"></i>Docente / Personal</h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-warning me-2"></i>Registro de asistencia</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-warning me-2"></i>Consulta de historial</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-warning me-2"></i>Solicitud de licencias</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-warning me-2"></i>Comunicados</li>
+              <li class="list-group-item"><i class="bi bi-check-circle-fill text-warning me-2"></i>Perfil personal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 bg-light rounded-4 shadow-lg mt-5">
+  <div class="container">
+    <div class="row min-vh-50 justify-content-center align-items-center text-center">
+      <div class="col-lg-8">
+        <h2 class="fw-bold mb-4">Sobre el Sistema</h2>
+        <p class="lead">Solución digital para controlar y gestionar eficientemente al personal académico y administrativo del Instituto Técnico Brasil.</p>
+        <p>Desarrollado con tecnologías modernas: seguro, rápido y responsivo.</p>
+        <div class="d-flex justify-content-center gap-5 mt-4 flex-wrap">
+          <div class="text-center">
+            <i class="bi bi-shield-check fs-1 text-primary"></i>
+            <p class="fw-bold mt-2">Seguro</p>
+          </div>
+          <div class="text-center">
+            <i class="bi bi-speedometer2 fs-1 text-primary"></i>
+            <p class="fw-bold mt-2">Eficiente</p>
+          </div>
+          <div class="text-center">
+            <i class="bi bi-phone fs-1 text-primary"></i>
+            <p class="fw-bold mt-2">Responsivo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Usuarios{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Usuarios</h1>
+<a href="{{ url_for('usuario.create') }}" class="btn btn-success mb-3">Nuevo Usuario</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Empleado</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in usuarios %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.empleado.nombre }} {{ user.empleado.apellido }}</td>
+            <td>{{ user.rol.rol }}</td>
+            <td>
+                <a href="{{ url_for('usuario.edit', id=user.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{{ url_for('usuario.delete', id=user.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este usuario?')">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

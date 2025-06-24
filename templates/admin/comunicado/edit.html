@@ -1,0 +1,27 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Editar Comunicado{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Editar comunicado</h1>
+
+<form method="POST" action="{{ url_for('comunicado.edit', id=comunicado.id) }}">
+    <div class="form-group">
+        <label for="titulo">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" value="{{ comunicado.titulo }}" required>
+    </div>
+    <div class="form-group">
+        <label for="contenido">Contenido</label>
+        <textarea class="form-control" id="contenido" name="contenido" rows="4"
+            required>{{ comunicado.contenido }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="fecha_publicacion">Fecha de publicación</label>
+        <input type="date" class="form-control" id="fecha_publicacion" name="fecha_publicacion"
+            value="{{ comunicado.fecha_publicacion }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{{ url_for('comunicado.index') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "personal/base.html" %}
+{% block title %}Mi Perfil - {{ empleado.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1"><i class="bi bi-person-badge me-2"></i>Mi Perfil</h1>
+      <p class="text-muted mb-0">{{ empleado.nombre }} {{ empleado.apellido }}</p>
+    </div>
+    <div class="no-print">
+      <button onclick="window.print()" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-printer me-1"></i> Imprimir
+      </button>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white">
+          <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Información Personal</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-borderless mb-0">
+              <tbody>
+                <tr>
+                  <th width="30%"><i class="bi bi-person-vcard me-2"></i>Nombre Completo:</th>
+                  <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+                </tr>
+                <tr>
+                  <th><i class="bi bi-credit-card me-2"></i>CI:</th>
+                  <td>{{ empleado.ci }}</td>
+                </tr>
+                <tr>
+                  <th><i class="bi bi-envelope me-2"></i>Email:</th>
+                  <td>{{ empleado.email }}</td>
+                </tr>
+                <tr>
+                  <th><i class="bi bi-telephone me-2"></i>Teléfono:</th>
+                  <td>{{ empleado.telefono }}</td>
+                </tr>
+                <tr>
+                  <th><i class="bi bi-briefcase me-2"></i>Cargo:</th>
+                  <td>{{ empleado.cargo.cargo if empleado.cargo else 'No especificado' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      button {
+        display: none !important;
+      }
+    }
+  </style>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "director/base.html" %}
+
+{% block title %}Dashboard - Director{% endblock %}
+
+{% block content %}
+<div class="container py-4 content-wrapper">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">Bienvenido, Director</h1>
+      <p class="text-muted mb-0">Panel de control del sistema de gestión educativa</p>
+    </div>
+    <div class="text-end">
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger">
+        <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+      </a>
+    </div>
+  </div>
+
+  <!-- Tarjetas resumen -->
+  <div class="row g-4 mb-4">
+    {% for card in [
+      {'title': 'Empleados', 'count': total_empleados, 'icon': 'bi-people-fill', 'color': 'primary', 'url': url_for('director.empleados')},
+      {'title': 'Licencias pendientes', 'count': licencias_pendientes, 'icon': 'bi-file-earmark-text-fill', 'color': 'warning', 'url': url_for('solicitud_licencia_director.index_director')},
+      {'title': 'Comunicados', 'count': total_comunicados, 'icon': 'bi-megaphone-fill', 'color': 'info', 'url': url_for('director.comunicados')},
+    ] %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card card-hover border-start border-4 border-{{ card.color }} h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted">{{ card.title }}</h6>
+              <h3 class="fw-bold">{{ card.count }}</h3>
+            </div>
+            <div class="bg-{{ card.color }} bg-opacity-10 p-3 rounded">
+              <i class="bi {{ card.icon }} text-{{ card.color }} fs-3"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0">
+          <a href="{{ card.url }}" class="text-decoration-none small">Ver más <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Accesos rápidos -->
+  <div class="card card-hover mb-4">
+    <div class="card-header bg-white border-bottom">
+      <h5 class="mb-0">Accesos rápidos</h5>
+    </div>
+    <div class="card-body pt-3">
+      <div class="row g-3">
+        {% for acceso in [
+          {'icon': 'bi-people-fill', 'text': 'Empleados', 'color': 'primary', 'url': url_for('director.empleados')},
+          {'icon': 'bi-file-earmark-text-fill', 'text': 'Solicitudes Licencia', 'color': 'warning', 'url': url_for('solicitud_licencia_director.index_director')},
+          {'icon': 'bi-check-circle-fill', 'text': 'Licencias Aprobadas', 'color': 'success', 'url': url_for('licencia_aprobada_director.index_director')},
+          {'icon': 'bi-clock-history', 'text': 'Historial Laboral', 'color': 'secondary', 'url': url_for('director.historiales')},
+          {'icon': 'bi-megaphone-fill', 'text': 'Comunicados', 'color': 'info', 'url': url_for('director.comunicados')},
+        ] %}
+        <div class="col-md-3 col-6">
+          <a href="{{ acceso.url }}" class="btn btn-light btn-module w-100 text-start p-3">
+            <div class="d-flex align-items-center">
+              <div class="bg-{{ acceso.color }} bg-opacity-10 p-2 rounded me-3">
+                <i class="bi {{ acceso.icon }} text-{{ acceso.color }} fs-4"></i>
+              </div>
+              <span>{{ acceso.text }}</span>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} CREAR SOLICITUD DE LICENCIA {% endblock %}
+
+{% block content %}
+<h1>Registrar nueva solicitud de licencia</h1>
+
+<form action="{{ url_for('solicitud_licencia.create') }}" method="POST">
+    <div class="mb-3">
+        <label class="form-label">Empleado</label>
+        <select name="empleado_id" class="form-select" required>
+            <option value="">Seleccione un empleado</option>
+            {% for empleado in empleados %}
+            <option value="{{ empleado.id }}">{{ empleado.nombre }} {{ empleado.apellido}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Tipo de licencia</label>
+        <select name="tipo_licencia_id" class="form-select" required>
+            <option value="">Seleccione un tipo de licencia</option>
+            {% for tipo in tipos %}
+            <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha inicio</label>
+        <input type="date" class="form-control" name="fecha_inicio" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Fecha fin</label>
+        <input type="date" class="form-control" name="fecha_fin" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Motivo</label>
+        <textarea class="form-control" name="motivo" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Crear solicitud</button>
+</form>
+{% endblock %}

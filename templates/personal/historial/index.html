@@ -1,0 +1,30 @@
+{% extends 'personal/base.html' %}
+
+{% block title %}Mi Historial Laboral{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Mi historial laboral</h1>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Cargo</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Registrado por</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in historiales %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.cargo or 'No definido' }}</td>
+            <td>{{ item.fecha_inicio.strftime('%Y-%m-%d') if item.fecha_inicio else 'Sin fecha' }}</td>
+            <td>{{ item.fecha_fin.strftime('%Y-%m-%d') if item.fecha_fin else 'Sin fecha' }}</td>
+            <td>{{ (item.usuario.nombre ~ ' (' ~ item.usuario.username ~ ')') if item.usuario else 'No definido' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

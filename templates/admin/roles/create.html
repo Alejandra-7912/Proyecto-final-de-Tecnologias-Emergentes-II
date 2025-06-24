@@ -1,0 +1,17 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Crear Rol{% endblock %}
+
+{% block content %}
+<h1>Crear Nuevo Rol</h1>
+
+<form action="{{ url_for('rol.create') }}" method="POST">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre del Rol</label>
+        <input type="text" class="form-control" name="rol" id="id" required placeholder="Ej. Coordinador">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Registrar Rol</button>
+    <a href="{{ url_for('rol.index') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

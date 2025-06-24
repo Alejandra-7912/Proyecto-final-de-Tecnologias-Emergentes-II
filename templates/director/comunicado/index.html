@@ -1,0 +1,26 @@
+{% extends 'director/base.html' %}
+{% block title %}COMUNICADOS{% endblock %}
+{% block content %}
+<h1>Lista de comunicados</h1>
+<a href="{{ url_for('comunicado_director.create_director') }}" class="btn btn-primary mb-3">Nuevo comunicado</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th><th>Título</th><th>Fecha</th><th>Usuario</th><th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for com in comunicados %}
+        <tr>
+            <td>{{ com.id }}</td>
+            <td>{{ com.titulo }}</td>
+            <td>{{ com.fecha_publicacion }}</td>
+            <td>{{ com.usuario.username }}</td>
+            <td>
+                <a href="{{ url_for('comunicado_director.edit_director', id=com.id) }}" class="btn btn-sm btn-success">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

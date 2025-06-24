@@ -1,0 +1,19 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} CREAR CARGO {% endblock %}
+
+{% block content %}
+<h1>Registrar nuevo cargo</h1>
+
+<form action="{{ url_for('cargo.create') }}" method="POST">
+    <div class="mb-3">
+        <label class="form-label">Nombre del cargo</label>
+        <input type="text" class="form-control" name="cargo" required>  <!-- CAMBIADO -->
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" name="descripcion" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Crear cargo</button>
+</form>
+{% endblock %}

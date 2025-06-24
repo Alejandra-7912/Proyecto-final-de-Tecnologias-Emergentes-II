@@ -1,0 +1,46 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} Editar Asistencia {% endblock %}
+
+{% block content %}
+<h1>Editar Asistencia</h1>
+
+<form method="POST" action="{{ url_for('asistencia.edit', id=asistencia.id) }}">
+    <div class="mb-3">
+        <label>Fecha</label>
+        <input type="date" name="fecha" value="{{ asistencia.fecha }}" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label>Hora Entrada</label>
+        <input type="time" name="hora_entrada" 
+               value="{{ asistencia.hora_entrada.strftime('%H:%M') if asistencia.hora_entrada else '' }}" 
+               step="60" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label>Hora Salida</label>
+        <input type="time" name="hora_salida" 
+               value="{{ asistencia.hora_salida.strftime('%H:%M') if asistencia.hora_salida else '' }}" 
+               step="60" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label>Justificación</label>
+        <textarea name="justificacion" class="form-control">{{ asistencia.justificacion }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label>Empleado</label>
+        <select name="empleado_id" class="form-control" required>
+            {% for empleado in empleados %}
+            <option value="{{ empleado.id }}" {% if empleado.id == asistencia.empleado_id %}selected{% endif %}>
+                {{ empleado.nombre }} {{ empleado.apellido }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+</form>
+{% endblock %}

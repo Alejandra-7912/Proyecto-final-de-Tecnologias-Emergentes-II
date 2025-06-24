@@ -1,0 +1,42 @@
+{% extends "personal/base.html" %}
+
+{% block title %}Marcar Asistencia{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-4">🕒 Marcar Asistencia</h3>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <div class="card">
+    <div class="card-body">
+      <p><strong>Fecha:</strong> {{ asistencia.fecha if asistencia else current_date }}</p>
+      <p><strong>Hora de entrada:</strong> {{ asistencia.hora_entrada.strftime('%H:%M') if asistencia and
+        asistencia.hora_entrada else "No registrada" }}</p>
+      <p><strong>Hora de salida:</strong> {{ asistencia.hora_salida.strftime('%H:%M') if asistencia and
+        asistencia.hora_salida else "No registrada" }}</p>
+    </div>
+  </div>
+
+  <form method="POST" class="mt-3">
+    {% if not asistencia %}
+    <button type="submit" class="btn btn-success">🟢 Marcar Entrada</button>
+    {% elif not asistencia.hora_salida %}
+    <button type="submit" class="btn btn-primary">🔵 Marcar Salida</button>
+    {% else %}
+    <div class="alert alert-info mt-2">✔️ Ya marcaste asistencia completa hoy.</div>
+    {% endif %}
+  </form>
+
+  <a href="{{ url_for('personal.dashboard') }}" class="btn btn-secondary mt-3">⬅️ Volver al panel</a>
+</div>
+{% endblock %}

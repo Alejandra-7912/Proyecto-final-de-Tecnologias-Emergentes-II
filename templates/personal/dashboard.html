@@ -1,0 +1,182 @@
+{% extends "personal/base.html" %}
+
+{% block title %}Panel - Personal{% endblock %}
+
+{% block content %}
+<div class="container py-4 content-wrapper">
+  <!-- Encabezado de bienvenida -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 mb-1">Bienvenido, {{ empleado.nombre }} {{ empleado.apellido }}</h1>
+      <p class="text-muted mb-0">{{ rol_usuario }} | {{ fecha_actual }}</p>
+    </div>
+    <div>
+      <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-sm">
+        <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+      </a>
+    </div>
+  </div>
+
+  <!-- Tarjetas resumen -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm card-hover">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="card-title text-primary"><i class="bi bi-person-badge"></i> Estado Actual</h5>
+              <p class="mb-0">Cargo: {{ empleado.cargo.cargo if empleado.cargo else 'No especificado' }}</p>
+            </div>
+            <div class="bg-primary bg-opacity-10 p-3 rounded">
+              <i class="bi bi-person-check-fill text-primary fs-4"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0">
+          <a href="{{ url_for('personal.mi_perfil') }}" class="text-decoration-none small">Ver perfil completo <i
+              class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm card-hover">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="card-title text-success"><i class="bi bi-calendar-check"></i> Asistencia Hoy</h5>
+              <p class="mb-0">Estado: {{ estado_asistencia if estado_asistencia else 'No registrado' }}</p>
+            </div>
+            <div class="bg-success bg-opacity-10 p-3 rounded">
+              <i class="bi bi-alarm-fill text-success fs-4"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0">
+          <a href="{{ url_for('personal.marcar_asistencia') }}" class="text-decoration-none small">Marcar asistencia <i
+              class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm card-hover">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="card-title text-warning"><i class="bi bi-file-earmark-text-fill"></i> Licencias Pendientes</h5>
+              <h3 class="fw-bold">{{ licencias_pendientes }}</h3>
+            </div>
+            <div class="bg-warning bg-opacity-10 p-3 rounded">
+              <i class="bi bi-file-earmark-text-fill text-warning fs-4"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0">
+          <a href="{{ url_for('licencia_aprobada_personal.index_por_estado_personal', estado='Pendiente') }}"
+            class="text-decoration-none small">
+            Ver licencias pendientes <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accesos rápidos -->
+  <div class="card mb-4 shadow-sm card-hover">
+    <div class="card-header bg-white border-bottom">
+      <h5 class="mb-0"><i class="bi bi-speedometer2 me-2"></i>Accesos rápidos</h5>
+    </div>
+    <div class="card-body pt-3">
+      <div class="row g-3">
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('personal.mi_perfil') }}" class="btn btn-light border w-100 text-start p-3 btn-module">
+            <div class="d-flex align-items-center">
+              <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                <i class="bi bi-person-lines-fill text-primary fs-4"></i>
+              </div>
+              <div>
+                <span class="d-block fw-bold">Mi Perfil</span>
+                <small class="text-muted">Ver información personal</small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('personal.marcar_asistencia') }}"
+            class="btn btn-light border w-100 text-start p-3 btn-module">
+            <div class="d-flex align-items-center">
+              <div class="bg-success bg-opacity-10 p-2 rounded me-3">
+                <i class="bi bi-alarm-fill text-success fs-4"></i>
+              </div>
+              <div>
+                <span class="d-block fw-bold">Asistencias</span>
+                <small class="text-muted">Marcar entrada/salida</small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('solicitud_licencia_personal.create_personal') }}"
+            class="btn btn-light border w-100 text-start p-3 btn-module">
+            <div class="d-flex align-items-center">
+              <div class="bg-warning bg-opacity-10 p-2 rounded me-3">
+                <i class="bi bi-file-earmark-medical-fill text-warning fs-4"></i>
+              </div>
+              <div>
+                <span class="d-block fw-bold">Solicitar Permiso</span>
+                <small class="text-muted">Nueva solicitud de licencia</small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('solicitud_licencia_personal.index_personal') }}"
+            class="btn btn-light border w-100 text-start p-3 btn-module">
+            <div class="d-flex align-items-center">
+              <div class="bg-info bg-opacity-10 p-2 rounded me-3">
+                <i class="bi bi-file-earmark-check-fill text-info fs-4"></i>
+              </div>
+              <div>
+                <span class="d-block fw-bold">Licencias</span>
+                <small class="text-muted">Ver estado de solicitudes</small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('personal.comunicados') }}" class="btn btn-light border w-100 text-start p-3 btn-module">
+            <div class="d-flex align-items-center">
+              <div class="bg-secondary bg-opacity-10 p-2 rounded me-3">
+                <i class="bi bi-megaphone-fill text-secondary fs-4"></i>
+              </div>
+              <div>
+                <span class="d-block fw-bold">Comunicados</span>
+                <small class="text-muted">Mensajes institucionales</small>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <a href="{{ url_for('personal.historial') }}" class="btn btn-light border w-100 text-start p-3 btn-module">
+            <div class="d-flex align-items-center">
+              <div class="bg-dark bg-opacity-10 p-2 rounded me-3">
+                <i class="bi bi-clock-history text-dark fs-4"></i>
+              </div>
+              <div>
+                <span class="d-block fw-bold">Historial</span>
+                <small class="text-muted">Laboral y registros</small>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

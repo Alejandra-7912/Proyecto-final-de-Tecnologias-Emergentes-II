@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Editar Historial Laboral{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Editar Historial Laboral</h1>
+
+<form method="POST" action="{{ url_for('historial.edit', id=historial.id) }}">
+    <div class="form-group">
+        <label for="empleado_id">Empleado</label>
+        <select name="empleado_id" id="empleado_id" class="form-control" required>
+            {% for empleado in empleados %}
+                <option value="{{ empleado.id }}" {% if empleado.id == historial.empleado_id %}selected{% endif %}>{{ empleado.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="fecha_inicio">Fecha Inicio</label>
+        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{ historial.fecha_inicio.strftime('%Y-%m-%d') }}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="fecha_fin">Fecha Fin (opcional)</label>
+        <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" value="{{ historial.fecha_fin.strftime('%Y-%m-%d') if historial.fecha_fin else '' }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{{ url_for('historial.index') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

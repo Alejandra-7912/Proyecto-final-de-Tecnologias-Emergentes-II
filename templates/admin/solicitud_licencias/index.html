@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} Solicitudes de Licencia {% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Lista de solicitudes de licencia</h1>
+
+<a href="{{ url_for('solicitud_licencia.create') }}" class="btn btn-success mb-3">Nueva solicitud</a>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Fecha de solicitud</th>  
+            <th>Empleado</th>
+            <th>Tipo de licencia</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
+            <th>Motivo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for solicitud in solicitudes %}
+        <tr>
+            <td>{{ solicitud.id }}</td>
+            <td>{{ solicitud.fecha_solicitud.strftime('%Y-%m-%d') if solicitud.fecha_solicitud else '' }}</td>  
+            <td>{{ solicitud.empleado.nombre}} {{ solicitud.empleado.apellido}}</td>
+            <td>{{ solicitud.tipo_licencia.nombre }}</td>
+            <td>{{ solicitud.fecha_inicio.strftime('%Y-%m-%d') if solicitud.fecha_inicio else '' }}</td>
+            <td>{{ solicitud.fecha_fin.strftime('%Y-%m-%d') if solicitud.fecha_fin else '' }}</td>
+            <td>{{ solicitud.motivo }}</td>
+            <td>
+                <a href="{{ url_for('solicitud_licencia.edit', id=solicitud.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{{ url_for('solicitud_licencia.delete', id=solicitud.id) }}" class="btn btn-danger btn-sm ml-2" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?');">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if solicitudes|length == 0 %}
+<p class="text-center text-muted">No hay solicitudes registradas.</p>
+{% endif %}
+{% endblock %}

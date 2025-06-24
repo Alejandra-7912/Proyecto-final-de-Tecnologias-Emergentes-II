@@ -1,0 +1,36 @@
+{% extends "personal/base.html" %}
+
+{% block title %}Historial de Asistencias{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h3 class="mb-4">📅 Historial de Asistencias</h3>
+
+  {% if historial %}
+    <table class="table table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>Fecha</th>
+          <th>Entrada</th>
+          <th>Salida</th>
+          <th>Justificación</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for asistencia in historial %}
+          <tr>
+            <td>{{ asistencia.fecha.strftime('%d/%m/%Y') }}</td>
+            <td>{{ asistencia.hora_entrada or '—' }}</td>
+            <td>{{ asistencia.hora_salida or '—' }}</td>
+            <td>{{ asistencia.justificacion or 'Ninguna' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-info">No se encontraron registros de asistencia.</div>
+  {% endif %}
+
+  <a href="{{ url_for('personal.dashboard') }}" class="btn btn-secondary mt-3">⬅️ Volver al panel</a>
+</div>
+{% endblock %}

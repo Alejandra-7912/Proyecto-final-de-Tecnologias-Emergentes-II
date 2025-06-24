@@ -1,0 +1,51 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} REGISTRAR EMPLEADO {% endblock %}
+
+{% block content %}
+<h1>Registrar nuevo empleado</h1>
+
+<form action="{{ url_for('empleado.create') }}" method="POST">
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="nombre" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Apellido</label>
+        <input type="text" class="form-control" name="apellido" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">CI</label>
+        <input type="text" class="form-control" name="ci" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input type="text" class="form-control" name="telefono" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha de ingreso</label>
+        <input type="date" class="form-control" name="fecha" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Cargo</label>
+        <select name="cargo_id" class="form-control" required>
+            <option value="">Seleccione cargo</option>
+            {% for cargo in cargos %}
+            <option value="{{ cargo.id }}">{{ cargo.cargo }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar empleado</button>
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'director/base.html' %}
+
+{% block title %} EDITAR EMPLEADO {% endblock %}
+
+{% block content %}
+<h1>Editar empleado</h1>
+
+<form action="{{ url_for('empleado.edit', id=empleado.id) }}" method="POST">
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" name="nombre" value="{{ empleado.nombre }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Apellido</label>
+        <input type="text" class="form-control" name="apellido" value="{{ empleado.apellido }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">CI</label>
+        <input type="text" class="form-control" name="ci" value="{{ empleado.ci }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" value="{{ empleado.email }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Teléfono</label>
+        <input type="text" class="form-control" name="telefono" value="{{ empleado.telefono }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha de ingreso</label>
+        <input type="date" class="form-control" name="fecha" value="{{ empleado.fecha.strftime('%Y-%m-%d') }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Cargo</label>
+        <select name="cargo_id" class="form-control" required>
+            {% for cargo in cargos %}
+            <option value="{{ cargo.id }}" {% if cargo.id == empleado.cargo_id %}selected{% endif %}>{{ cargo.cargo }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Actualizar empleado</button>
+</form>
+{% endblock %}

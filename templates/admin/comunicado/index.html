@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} COMUNICADOS {% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Lista de comunicados</h1>
+
+<a href="{{ url_for('comunicado.create') }}" class="btn btn-success mb-3">Nuevo comunicado</a>
+
+<table class="table table-striped table-bordered table-hover w-auto mx-auto">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Contenido</th>
+            <th>Fecha</th>
+            <th>Usuario ID</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for comunicado in comunicados %}
+        <tr>
+            <td>{{ comunicado.id }}</td>
+            <td>{{ comunicado.titulo }}</td>
+            <td>{{ comunicado.contenido }}</td>
+            <td>{{ comunicado.fecha_publicacion }}</td>
+            <td>{{ comunicado.usuario.username }}</td>
+            <td class="text-center">
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{{ url_for('comunicado.edit', id=comunicado.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <a href="{{ url_for('comunicado.delete', id=comunicado.id) }}" class="btn btn-danger btn-sm"
+                        onclick="return confirm('¿Estás seguro de eliminar este comunicado?')">Eliminar</a>
+                </div>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6">No hay comunicados registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

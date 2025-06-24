@@ -1,0 +1,21 @@
+{% extends 'director/base.html' %}
+{% block title %}EDITAR COMUNICADO{% endblock %}
+{% block content %}
+<h1>Editar comunicado</h1>
+<form method="POST">
+    <div class="mb-3">
+        <label>Título</label>
+        <input type="text" class="form-control" name="titulo" value="{{ comunicado.titulo }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Contenido</label>
+        <textarea class="form-control" name="contenido" required>{{ comunicado.contenido }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label>Fecha publicación</label>
+        <input type="date" class="form-control" name="fecha_publicacion" value="{{ comunicado.fecha_publicacion }}" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Sistema de Administración - ITB Bolivia{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style/style_admin.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('admin.dashboard') }}">
+        <!-- Tres logos lado a lado -->
+        <div class="d-flex align-items-center gap-2">
+          <img src="{{ url_for('static', filename='images/logo_itb.jpg') }}" class="rounded-circle" height="50" width="50">
+        </div>
+        <span class="fw-semibold fs-5 m-0 ms-3">ITB - Control Personal</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- Opciones directas -->
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.empleados') }}"><i class="bi bi-person-vcard me-1"></i>Empleados</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.cargos') }}"><i class="bi bi-briefcase-fill me-1"></i>Cargos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.historiales') }}"><i class="bi bi-clock-history me-1"></i>Historial</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.usuarios') }}"><i class="bi bi-person-gear me-1"></i>Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.roles') }}"><i class="bi bi-key-fill me-1"></i>Roles</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.asistencias') }}"><i class="bi bi-calendar-check me-1"></i>Asistencias</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('solicitud_licencia.index') }}"><i class="bi bi-file-earmark-text me-1"></i>Solicitudes</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('licencia_aprobada.index') }}"><i class="bi bi-patch-check me-1"></i>Aprobadas</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('tipo_licencia.index') }}"><i class="bi bi-tags me-1"></i>Tipos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.comunicados') }}"><i class="bi bi-megaphone me-1"></i>Comunicados</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="container my-4 content-wrapper flex-grow-1">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-light border-top py-3 mt-auto">
+    <div class="container text-center text-muted small">
+      <i class="bi bi-building me-1"></i>Instituto Técnico Brasil - Bolivia | <i class="bi bi-c-circle me-1"></i>2025 Sistema de Control de Personal
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

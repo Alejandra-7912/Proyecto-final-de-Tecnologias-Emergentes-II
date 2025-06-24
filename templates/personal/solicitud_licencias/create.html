@@ -1,0 +1,41 @@
+{% extends 'personal/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Solicitar Licencia</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="fecha_solicitud" class="form-label">Fecha de solicitud</label>
+            <input type="date" name="fecha_solicitud" class="form-control" id="fecha_solicitud"
+                value="{{ fecha_actual }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="tipo_id" class="form-label">Tipo de licencia</label>
+            <select name="tipo_licencia_id" id="tipo_id" class="form-select" required>
+                <option value="">Seleccione un tipo</option>
+                {% for tipo in tipos %}
+                <option value="{{ tipo.id }}">{{ tipo.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha_inicio" class="form-label">Fecha de inicio</label>
+            <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha_fin" class="form-label">Fecha de fin</label>
+            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="motivo" class="form-label">Motivo</label>
+            <textarea name="motivo" id="motivo" class="form-control" rows="3" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} Asistencias {% endblock %}
+
+{% block content %}
+<h1>Asistencias</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora Entrada</th>
+            <th>Hora Salida</th>
+            <th>Justificación</th>
+            <th>Empleado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in asistencias %}
+        <tr>
+            <td>{{ a.id }}</td>
+            <td>{{ a.fecha }}</td>
+            <td>{{ a.hora_entrada }}</td>
+            <td>{{ a.hora_salida }}</td>
+            <td>{{ a.justificacion }}</td>
+            <td>{{ a.empleado.nombre }} {{ a.empleado.apellido }}</td>
+            <td>
+                <a href="{{ url_for('asistencia.edit', id=a.id) }}" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

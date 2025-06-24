@@ -1,0 +1,34 @@
+{% extends 'director/base.html' %}
+
+{% block title %} LISTA DE EMPLEADOS {% endblock %}
+
+{% block content %}
+<h1>Lista de empleados</h1>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre completo</th>
+            <th>CI</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Fecha ingreso</th>
+            <th>Cargo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{ empleado.id }}</td>
+            <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+            <td>{{ empleado.ci }}</td>
+            <td>{{ empleado.email }}</td>
+            <td>{{ empleado.telefono }}</td>
+            <td>{{ empleado.fecha.strftime('%Y-%m-%d') }}</td>
+            <td>{{ empleado.cargo.cargo }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

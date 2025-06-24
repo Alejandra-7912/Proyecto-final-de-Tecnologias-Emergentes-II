@@ -1,0 +1,60 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}EDITAR SOLICITUD DE LICENCIA{% endblock %}
+
+{% block content %}
+<h1>Editar solicitud de licencia</h1>
+
+<form action="{{ url_for('solicitud_licencia.edit', id=solicitud.id) }}" method="POST">
+
+    <div class="mb-3">
+        <label class="form-label">Empleado</label>
+        <select name="empleado_id" class="form-select" required>
+            {% for empleado in empleados %}
+            <option value="{{ empleado.id }}" {% if empleado.id==solicitud.empleado_id %} selected {% endif %}>
+                {{ empleado.nombre }} {{ empleado.apellido }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Tipo de licencia</label>
+        <select name="tipo_licencia_id" class="form-select" required>
+            {% for tipo in tipos %}
+            <option value="{{ tipo.id }}" {% if tipo.id==solicitud.tipo_licencia_id %} selected {% endif %}>
+                {{ tipo.nombre }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha de solicitud</label>
+        <input type="date" class="form-control" name="fecha_solicitud"
+            value="{{ solicitud.fecha_solicitud.strftime('%Y-%m-%d') if solicitud.fecha_solicitud else '' }}" required>
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label">Fecha inicio</label>
+        <input type="date" class="form-control" name="fecha_inicio"
+            value="{{ solicitud.fecha_inicio.strftime('%Y-%m-%d') if solicitud.fecha_inicio else '' }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Fecha fin</label>
+        <input type="date" class="form-control" name="fecha_fin"
+            value="{{ solicitud.fecha_fin.strftime('%Y-%m-%d') if solicitud.fecha_fin else '' }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Motivo</label>
+        <textarea class="form-control" name="motivo" rows="3" required>{{ solicitud.motivo or '' }}</textarea>
+    </div>
+
+    
+
+    <button type="submit" class="btn btn-primary">Actualizar solicitud</button>
+</form>
+{% endblock %}

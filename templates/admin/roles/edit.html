@@ -1,0 +1,22 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} Editar Rol {% endblock %}
+
+{% block content %}
+<h1>Editar rol</h1>
+
+{% if error %}
+<div class="alert alert-danger">
+    {{ error }}
+</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('rol.edit', id=rol.id) }}">
+    <div class="form-group">
+        <label for="rol">Nombre del rol</label>
+        <input type="text" class="form-control" id="rol" name="rol" value="{{ rol.rol }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{{ url_for('rol.index') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

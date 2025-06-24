@@ -1,0 +1,41 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} LISTA DE EMPLEADOS {% endblock %}
+
+{% block content %}
+<h1>Lista de empleados</h1>
+
+<a href="{{ url_for('empleado.create') }}" class="btn btn-success mb-3">Registrar nuevo empleado</a>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre completo</th>
+            <th>CI</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Fecha ingreso</th>
+            <th>Cargo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for empleado in empleados %}
+        <tr>
+            <td>{{ empleado.id }}</td>
+            <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+            <td>{{ empleado.ci }}</td>
+            <td>{{ empleado.email }}</td>
+            <td>{{ empleado.telefono }}</td>
+            <td>{{ empleado.fecha.strftime('%Y-%m-%d') }}</td>
+            <td>{{ empleado.cargo.cargo }}</td>
+            <td>
+                <a href="{{ url_for('empleado.edit', id=empleado.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{{ url_for('empleado.delete', id=empleado.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Desea eliminar este empleado?')">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

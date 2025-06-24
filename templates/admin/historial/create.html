@@ -1,0 +1,71 @@
+{% extends 'admin/base.html' %}
+{% block title %}Registrar Historial{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Registrar historial laboral</h1>
+
+<form method="POST" action="{{ url_for('historial.create') }}">
+    <div class="form-group">
+        <label for="empleado_id">Empleado</label>
+        <select id="empleado_id" name="empleado_id" class="form-control" required>
+            <option value="">Seleccione...</option>
+            {% for emp in empleados %}
+            <option value="{{ emp.id }}">{{ emp.nombre }} {{ emp.apellido }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="detalles-empleado" class="bg-light border p-3 my-3" style="display: none;"></div>
+
+
+    <div class="form-group">
+        <label for="fecha_inicio">Fecha de inicio</label>
+        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+        <label for="fecha_fin">Fecha de fin (opcional)</label>
+        <input type="date" name="fecha_fin" id="fecha_fin" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{{ url_for('historial.index') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const select = document.getElementById('empleado_id');
+        const detalles = document.getElementById('detalles-empleado');
+        const imprimir = document.getElementById('btn-imprimir');
+
+        select.addEventListener('change', () => {
+            const id = select.value;
+            if (!id) {
+                detalles.style.display = 'none';
+                imprimir.style.display = 'none';
+                return;
+            }
+
+            fetch(`/historiales/empleado/${id}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.error) {
+                        detalles.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                        imprimir.style.display = 'none';
+                    } else {
+                        detalles.innerHTML = `
+                            <p><strong>CI:</strong> ${data.ci}</p>
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>Teléfono:</strong> ${data.telefono}</p>
+                            <p><strong>Cargo:</strong> ${data.cargo}</p>
+                            <p><strong>Usuarios:</strong> ${data.usuarios.join(', ')}</p>
+                        `;
+                        detalles.style.display = 'block';
+                        imprimir.href = `/historiales/imprimir/${id}`;
+                        imprimir.style.display = 'inline-block';
+                    }
+                });
+        });
+    });
+</script>
+{% endblock %}

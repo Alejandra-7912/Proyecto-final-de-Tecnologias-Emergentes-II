@@ -1,0 +1,21 @@
+{% extends "personal/base.html" %}
+
+{% block content %}
+<h2>Comunicados</h2>
+
+{% if comunicados %}
+    <ul>
+        {% for comunicado in comunicados %}
+            <li>
+                <strong>{{ comunicado.titulo }}</strong><br>
+                <small>Publicado el {{ comunicado.fecha_publicacion.strftime('%d/%m/%Y') }}</small><br>
+                <p>{{ comunicado.contenido }}</p>
+                <hr>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay comunicados disponibles.</p>
+{% endif %}
+
+{% endblock %}

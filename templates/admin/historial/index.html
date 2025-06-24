@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+{% block title %}Historial Laboral{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Historial laboral</h1>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('historial.create') }}" class="btn btn-success no-print">Registrar historial</a>
+    </div>
+</div>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Empleado</th>
+            <th>Cargo</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Realizado por</th>
+            <th class="no-print text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in historiales %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.empleado.nombre }}</td>
+            <td>{{ item.cargo }}</td>
+            <td>{{ item.fecha_inicio.strftime('%Y-%m-%d') }}</td>
+            <td>{{ item.fecha_fin.strftime('%Y-%m-%d') if item.fecha_fin else 'Actual' }}</td>
+            <td>{{ item.usuario.nombre }} ({{ item.usuario.username }})</td>
+            <td class="no-print text-center">
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{{ url_for('historial.edit', id=item.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{{ url_for('historial.delete', id=item.id) }}" class="btn btn-sm btn-danger"
+                        onclick="return confirm('¿Eliminar este historial?');">Eliminar</a>
+                    <a href="{{ url_for('historial.imprimir_historial', empleado_id=item.empleado_id) }}"
+                        class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-printer-fill"></i>
+                    </a>
+
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+
+        table {
+            font-size: 11pt;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc !important;
+        }
+    }
+</style>
+{% endblock %}
