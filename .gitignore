@@ -1,5 +1,4 @@
 echo __pycache__/ > .gitignore
 echo .env >> .gitignore
-echo instance/ >> .gitignore
-echo *.db >> .gitignore
+!instance/control_personalv1.db
 echo venv
